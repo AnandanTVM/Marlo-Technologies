@@ -16,7 +16,7 @@ const userProtect = (req, res, next) => {
       .then((data) => {
         if (data != null) {
           req.user = data;
-          console.log(data);
+        
           console.log("wrocking");
           next();
         } else {

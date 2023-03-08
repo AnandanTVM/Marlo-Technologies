@@ -38,7 +38,7 @@ module.exports = {
       db.get()
         .collection(collection.USER_COLLECTION)
         .findOne({ _id: ObjectId(Id) })
-        .then((user) => resolve(user))
+        .then((user) => {resolve(user)})
         .catch((err) => reject(err));
     }),
 };

@@ -18,6 +18,12 @@ const userLoginContro = (req, res) =>
     .catch((err) => {
       res.status(err.status).json({ status: false, Message: err.message });
     });
+const userProfileContro = (req, res) => {
+  let user = req.user;
+  delete user.password;
+  res.json({ status: true, response: user });
+};
 module.exports = {
   userLoginContro,
+  userProfileContro,
 };
