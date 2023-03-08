@@ -16,7 +16,7 @@ const userProtect = (req, res, next) => {
       .then((data) => {
         if (data != null) {
           req.user = data;
-        
+
           console.log("wrocking");
           next();
         } else {
@@ -37,6 +37,35 @@ const userProtect = (req, res, next) => {
     throw new Error("Not Autherized");
   }
 };
+const adminProtect = (req, res, next) => {
+  let token;
+
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer")
+  ) {
+    token = req.headers.authorization.split(" ")[1];
+
+    const decoded = jwt.verify(token, process.env.JWTKEY);
+
+    if (decoded.userId === "Admin@123") {
+     
+
+      console.log("wrocking");
+      next();
+    } else {
+      console.log("failed token");
+      res.status(401);
+      throw new Error("Not authorized, token fail");
+    }
+  }
+
+  if (!token) {
+    res.status(401);
+    throw new Error("Not Autherized");
+  }
+};
 module.exports = {
   userProtect,
+  adminProtect,
 };

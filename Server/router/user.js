@@ -6,4 +6,9 @@ const router = express.Router();
 // login route
 router.post("/login", userControllers.userLoginContro);
 router.get("/profile", userAuth.userProtect, userControllers.userProfileContro);
+router.put(
+  "/edit",
+  userAuth.userProtect,
+  userControllers.userEditProfilecontro
+);
 module.exports = router;

@@ -38,7 +38,38 @@ module.exports = {
       db.get()
         .collection(collection.USER_COLLECTION)
         .findOne({ _id: ObjectId(Id) })
-        .then((user) => {resolve(user)})
+        .then((user) => {
+          resolve(user);
+        })
         .catch((err) => reject(err));
     }),
+  userEditProfile: (id, details) =>
+    new Promise((resolve, reject) => {
+      db.get()
+        .collection(collection.USER_COLLECTION)
+        .updateOne(
+          {
+            _id: id,
+          },
+          {
+            $set: {
+              firstName: details.firstName,
+              lastName: details.lastName,
+              middleName: details.middleName,
+              dob: details.dob,
+              occupation: details.occupation,
+              company: details.company,
+              email: details.email,
+              phone: details.phone,
+            },
+          }
+        )
+        .then(() => {
+          resolve();
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    }),
+
 };
