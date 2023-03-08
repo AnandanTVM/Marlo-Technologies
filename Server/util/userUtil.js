@@ -1,6 +1,7 @@
 const collection = require("../config/collection");
 const db = require("../config/connection");
 const bcrypt = require("bcrypt");
+const { ObjectId } = require("mongodb");
 module.exports = {
   loginUser: (details) =>
     new Promise((resolve, reject) => {
@@ -30,6 +31,14 @@ module.exports = {
             reject({ message: "No user found..", status: 404 });
           }
         })
+        .catch((err) => reject(err));
+    }),
+  findUserById: (Id) =>
+    new Promise((resolve, reject) => {
+      db.get()
+        .collection(collection.USER_COLLECTION)
+        .findOne({ _id: ObjectId(Id) })
+        .then((user) => resolve(user))
         .catch((err) => reject(err));
     }),
 };
